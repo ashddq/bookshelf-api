@@ -133,24 +133,25 @@ const getAllBook = (request, h) => {
 };
 // Menampilkan buku dengan ID
 const getBookById = (request, h) => {
-  const {bookId} = request.params;
-  const book = books.filter((book) => book.id === bookId)[0];
-  if (book !== undefined){
+  const { bookId } = request.params;
+  const book = books.filter((book) => book.id == bookId)[0];
+  if (book === undefined) {
     const response = h.response({
-      status: 'success',
-      data:{
-        book
+      status: "fail",
+      message: "Buku tidak ditemukan",
+    });
+    response.code(404);
+    return response;
+  } else {
+    const response = h.response({
+      status: "success",
+      data: {
+        book,
       },
-  });
-  response.code(200);
-  return response;
+    });
+    response.code(200);
+    return response;
   }
-    const response = h.response({
-      status: 'fail',
-      message: 'Buku tidak ditemukan',
-  });
-  response.code(404);
-  return response;
 };
 // Mengubah data buku
 const editBookById = (request, h) => {
